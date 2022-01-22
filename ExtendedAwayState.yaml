@@ -63,7 +63,9 @@ trigger:
   minutes: '01'
   seconds: '30'
   hours: '0'
+
 condition: []
+
 action:
 - choose:
   - conditions:
@@ -86,12 +88,12 @@ action:
     - condition: trigger
       id: home-entered
     sequence:
-    - service: input_boolean.turn_off
-      target:
-        entity_id: !input 'extended_away_boolean'
     - service: timer.cancel
       target:
         entity_id: !input 'extended_away_timer'
+    - service: input_boolean.turn_off
+      target:
+        entity_id: !input 'extended_away_boolean'
   - conditions:
     - condition: or
       conditions:
