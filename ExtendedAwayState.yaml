@@ -20,6 +20,7 @@ blueprint:
     extended_away_time:
       name: Extended away time
       description: 'The time, after which a person is considered to be Extended Away (in minutes). 1 day = 1440 minutes.'
+      default: 1440
       selector:
         number:
           min: 1
