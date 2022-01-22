@@ -1,0 +1,35 @@
+blueprint:
+  name: Maintain an 'extended away' state for a person
+  description: Select a person, a boolean helper, the desired time period, and a timer helper,
+      and this automation will take care of maintaining the provided boolean with a value indicating
+      if the given person is away from home for more than the given amount of time.
+  domain: automation
+  input:
+    person:
+      name: Person
+      description: 'Person, or tracker, to watch (e.g. person.dad, or device_tracker.iphone).'
+      selector:
+        entity:
+          domain: device_tracker
+    extended_away_boolean:
+      name: Extended away indicator
+      description: 'A helper of type input_boolean to set.'
+      selector:
+        entity:
+          domain: input_boolean
+    extended_away_time:
+      name: Extended away time
+      description: 'The time, after which a person is considered to be Extended Away (in minutes). 1 day = 1440 minutes.'
+      selector:
+        number:
+          min: 1
+          max: 10080
+          step: 1440
+          unit_of_measurement: min
+          mode: box
+    extended_away_timer:
+      name: Timer
+      description: 'A helper timer this automation needs to keep track of the time a person is being away from home.'
+      selector:
+        entity:
+          domain: timer
