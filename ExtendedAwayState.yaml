@@ -38,83 +38,83 @@ variables:
   var_hours: !input 'extended_away_time'
 
 trigger:
-  - platform: event
-    event_type: timer.finished
-    id: timerfinished
-    event_data:
-      entity_id: !input 'extended_away_timer' #timer.extendedawaytimer_ocino
-  - platform: state
-    entity_id: !input 'person'
-    id: home-entered
-    to: home
-    for:
-      hours: 0
-      minutes: 0
-      seconds: 0
-  - platform: state
-    entity_id: !input 'person'
-    id: home-left
-    from: home
-  - platform: homeassistant
-    event: start
-    id: hass-started
-  - platform: time_pattern
-    id: hass-midnight
-    minutes: '01'
-    seconds: '30'
-    hours: '0'
-  condition: []
-  action:
-  - choose:
-    - conditions:
+- platform: event
+  event_type: timer.finished
+  id: timerfinished
+  event_data:
+    entity_id: !input 'extended_away_timer' #timer.extendedawaytimer_ocino
+- platform: state
+  entity_id: !input 'person'
+  id: home-entered
+  to: home
+  for:
+    hours: 0
+    minutes: 0
+    seconds: 0
+- platform: state
+  entity_id: !input 'person'
+  id: home-left
+  from: home
+- platform: homeassistant
+  event: start
+  id: hass-started
+- platform: time_pattern
+  id: hass-midnight
+  minutes: '01'
+  seconds: '30'
+  hours: '0'
+condition: []
+action:
+- choose:
+  - conditions:
+    - condition: trigger
+      id: timerfinished
+    sequence:
+    - service: input_boolean.turn_on
+      target:
+        entity_id: !input 'extended_away_boolean'
+  - conditions:
+    - condition: trigger
+      id: home-left
+    sequence:
+    - service: timer.start
+      data:
+        duration: {{ var_hours | float * 3600 }}
+      target:
+        entity_id: !input 'extended_away_timer'
+  - conditions:
+    - condition: trigger
+      id: home-entered
+    sequence:
+    - service: input_boolean.turn_off
+      target:
+        entity_id: !input 'extended_away_boolean'
+    - service: timer.cancel
+      target:
+        entity_id: !input 'extended_away_timer'
+  - conditions:
+    - condition: or
+      conditions:
       - condition: trigger
-        id: timerfinished
-      sequence:
-      - service: input_boolean.turn_on
-        target:
-          entity_id: !input 'extended_away_boolean'
-    - conditions:
+        id: hass-started
       - condition: trigger
-        id: home-left
-      sequence:
-      - service: timer.start
-        data:
-          duration: {{ var_hours | float * 3600 }}
-        target:
-          entity_id: !input 'extended_away_timer'
-    - conditions:
-      - condition: trigger
-        id: home-entered
-      sequence:
-      - service: input_boolean.turn_off
-        target:
-          entity_id: !input 'extended_away_boolean'
-      - service: timer.cancel
-        target:
-          entity_id: !input 'extended_away_timer'
-    - conditions:
-      - condition: or
-        conditions:
-        - condition: trigger
-          id: hass-started
-        - condition: trigger
-          id: hass-midnight
-      - condition: not
-        conditions:
-        - condition: state
-          entity_id: !input 'person'
-          state: home
-      - condition: not
-        conditions:
-        - condition: state
-          entity_id: !input 'extended_away_timer'
-          state: active
-      sequence:
-      - service: timer.start
-        data:
-          duration: {{ var_hours | float * 3600 }}
-        target:
-          entity_id: !input 'extended_away_timer'
-    default: []
-  mode: queued
-  max: 5
+        id: hass-midnight
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: !input 'person'
+        state: home
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: !input 'extended_away_timer'
+        state: active
+    sequence:
+    - service: timer.start
+      data:
+        duration: {{ var_hours | float * 3600 }}
+      target:
+        entity_id: !input 'extended_away_timer'
+  default: []
+mode: queued
+max: 5
