@@ -19,14 +19,14 @@ blueprint:
           domain: input_boolean
     extended_away_time:
       name: Extended away time
-      description: 'The time, after which a person is considered to be Extended Away (in minutes). 1 day = 1440 minutes.'
-      default: 1440
+      description: 'The time, after which a person is considered to be Extended Away (in hours).'
+      default: 24
       selector:
         number:
           min: 1
-          max: 10080
-          step: 1440
-          unit_of_measurement: min
+          max: 168
+          step: 1
+          unit_of_measurement: hrs
           mode: box
     extended_away_timer:
       name: Timer
