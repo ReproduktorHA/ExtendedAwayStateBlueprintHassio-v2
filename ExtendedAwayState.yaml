@@ -104,28 +104,28 @@ action:
       - condition: trigger
         id: hass-midnight
     sequence:
-   - condition: not
-     conditions:
-     - condition: state
-       entity_id: !input 'extended_away_timer'
-       state: active
-     - condition: state
-       entity_id: person.marek
-       state: home
-     - condition: state
-       entity_id: !input 'extended_away_boolean'
-       state: 'true'
-   - service: timer.start
-     data:
-       duration: '{{ var_seconds }}'
-     target:
-       entity_id: !input 'extended_away_timer'
-   - condition: state
-     entity_id: person.marek
-     state: home
-   - service: input_boolean.turn_off
-     target:
-       entity_id: !input 'extended_away_boolean'
+    - condition: not
+      conditions:
+      - condition: state
+        entity_id: !input 'extended_away_timer'
+        state: active
+      - condition: state
+        entity_id: person.marek
+        state: home
+      - condition: state
+        entity_id: !input 'extended_away_boolean'
+        state: 'true'
+    - service: timer.start
+      data:
+        duration: '{{ var_seconds }}'
+      target:
+        entity_id: !input 'extended_away_timer'
+    - condition: state
+      entity_id: person.marek
+      state: home
+    - service: input_boolean.turn_off
+      target:
+        entity_id: !input 'extended_away_boolean'
   default: []
 mode: queued
 max: 5
