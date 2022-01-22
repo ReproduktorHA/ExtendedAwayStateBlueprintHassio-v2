@@ -83,7 +83,7 @@ action:
     sequence:
     - service: timer.start
       data:
-        duration: '{{ var_hours }}'
+        duration: '{{ var_seconds }}'
       target:
         entity_id: !input 'extended_away_timer'
   - conditions:
