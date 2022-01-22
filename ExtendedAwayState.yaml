@@ -119,7 +119,7 @@ action:
             state: home
           - condition: state
             entity_id: !input 'extended_away_boolean'
-            state: 'true'
+            state: 'on'
         sequence:
         - service: timer.start
           data:
