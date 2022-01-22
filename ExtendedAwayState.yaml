@@ -10,7 +10,6 @@ blueprint:
       description: 'Person, or tracker, to watch (e.g. person.dad, or device_tracker.iphone).'
       selector:
         entity:
-          domain: device_tracker
     extended_away_boolean:
       name: Extended away indicator
       description: 'A helper of type input_boolean to set.'
