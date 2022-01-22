@@ -33,3 +33,4 @@ blueprint:
       selector:
         entity:
           domain: timer
+  source_url: https://github.com/Reproduktor/ExtendedAwayStateBlueprintHassio/blob/master/ExtendedAwayState.yaml
