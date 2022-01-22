@@ -77,6 +77,7 @@ action:
     - service: input_boolean.turn_on
       target:
         entity_id: !input 'extended_away_boolean'
+
   - conditions:
     - condition: trigger
       id: home-left
@@ -86,6 +87,7 @@ action:
         duration: '{{ var_seconds }}'
       target:
         entity_id: !input 'extended_away_timer'
+
   - conditions:
     - condition: trigger
       id: home-entered
@@ -96,6 +98,7 @@ action:
     - service: input_boolean.turn_off
       target:
         entity_id: !input 'extended_away_boolean'
+
   - conditions:
     - condition: or
       conditions:
@@ -104,28 +107,36 @@ action:
       - condition: trigger
         id: hass-midnight
     sequence:
-    - condition: not
-      conditions:
-      - condition: state
-        entity_id: !input 'extended_away_timer'
-        state: active
-      - condition: state
-        entity_id: !input 'person'
-        state: home
-      - condition: state
-        entity_id: !input 'extended_away_boolean'
-        state: 'true'
-    - service: timer.start
-      data:
-        duration: '{{ var_seconds }}'
-      target:
-        entity_id: !input 'extended_away_timer'
-    - condition: state
-      entity_id: !input 'person'
-      state: home
-    - service: input_boolean.turn_off
-      target:
-        entity_id: !input 'extended_away_boolean'
+    - choose:
+      - conditions:
+        - condition: not
+          conditions:
+          - condition: state
+            entity_id: !input 'extended_away_timer'
+            state: active
+          - condition: state
+            entity_id: !input 'person'
+            state: home
+          - condition: state
+            entity_id: !input 'extended_away_boolean'
+            state: 'true'
+        sequence:
+        - service: timer.start
+          data:
+            duration: '{{ var_seconds }}'
+          target:
+            entity_id: !input 'extended_away_timer'
+      - conditions:
+        - condition: state
+          entity_id: !input 'person'
+          state: home
+        sequence:
+        - service: input_boolean.turn_off
+          target:
+            entity_id: !input 'extended_away_boolean'
+      default: []
+
   default: []
+
 mode: queued
 max: 5
