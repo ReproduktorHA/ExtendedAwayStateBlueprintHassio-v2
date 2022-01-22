@@ -8,7 +8,9 @@ Or import to HA [from GitHub](https://github.com/Reproduktor/ExtendedAwayStateBl
 
 ## Description
 
-This automation maintains a boolean helper, indicating if a person or device is away from home for an extended (configurable) amount of time. To configure, two helpers need to be provided for the automation to function properly.
+This automation maintains a boolean helper, indicating if a person or device is away from home for an extended (configurable) amount of time. To configure, two helpers need to be provided for the automation to function properly.  
+For increased robustness, the automation is triggered when Hassio restarts, as well as every midnight, and either resets the Extended away status (if the person is at home), or starts the timer (if the person is not at home). This way, even if leaving/entering home zone events are missed for some reason, the extended away state will eventually be corrected.
+
 
 ## Parameters
 - **Person** An entity to track. It is designed for either a *person* entity, or *device_tracker* entity, but any entity which indicates home presence by being set to state 'home' will work
