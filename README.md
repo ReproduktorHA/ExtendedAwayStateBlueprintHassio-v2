@@ -20,6 +20,52 @@ This automation maintains a boolean helper, indicating if a person or device is 
 I use this automation for every home member independently. My schema is:
 1. Create `input_boolean` helpers for each person: `input_boolean.extendedaway_person1`, `input_boolean.extendedaway_person2`, ...
 2. Create `timer` helpers for each person: `timer.extendedawaytimer_person1`, `timer.extendedawaytimer_person2`, ...
-3. Based ojn this blueprint, create automations for each person: `Maintain an 'extended away' state for Person1`, `Maintain an 'extended away' state for Person2`, ...
+3. Based on this blueprint, create automations for each person: `Maintain an 'extended away' state for Person1`, `Maintain an 'extended away' state for Person2`, ...
 
 ## Practical applications
+I use the state for controlling, to whom the notifications from Home Assistant will be sent. In my scenario, I have a script which delivers a given message to family members, that are home-ish. The script is like this:
+```
+notify_family_members_at_home_these_days:
+  alias: Notify family members at home these days
+  icon: mdi:bell-badge-outline
+  description: "Whoever is not away for extended period of time, gets notified."
+  mode: queued
+  max: 10
+  fields:
+    message:
+      name: Message
+      description: "Message to send"
+      selector:
+        text:
+    title:
+      name: Title
+      description: "Title of the message to send"
+      selector:
+        text:
+  sequence:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.extendedaway_person1
+        state: 'off'
+      sequence:
+      - service: notify.mobile_app_person1
+        data:
+          message: "{{ message }}"
+          title: "{{ title }}"
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.extendedaway_person2
+        state: 'off'
+      sequence:
+      - service: notify.mobile_app_person2
+        data:
+          message: "{{ message }}"
+          title: "{{ title }}"
+
+... etc ...
+
+    default: []
+
+```
