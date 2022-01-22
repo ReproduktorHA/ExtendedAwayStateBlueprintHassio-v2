@@ -18,4 +18,8 @@ This automation maintains a boolean helper, indicating if a person or device is 
 
 ## Hints
 I use this automation for every home member independently. My schema is:
-1. Define `input_boolean` indicators
+1. Create `input_boolean` helpers for each person: `input_boolean.extendedaway_person1`, `input_boolean.extendedaway_person2`, ...
+2. Create `timer` helpers for each person: `timer.extendedawaytimer_person1`, `timer.extendedawaytimer_person2`, ...
+3. Based ojn this blueprint, create automations for each person: `Maintain an 'extended away' state for Person1`, `Maintain an 'extended away' state for Person2`, ...
+
+## Practical applications
