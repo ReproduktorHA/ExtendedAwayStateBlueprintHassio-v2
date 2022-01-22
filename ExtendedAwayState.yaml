@@ -36,7 +36,7 @@ blueprint:
   source_url: https://github.com/Reproduktor/ExtendedAwayStateBlueprintHassio/blob/master/ExtendedAwayState.yaml
 variables:
   var_hours: !input 'extended_away_time'
-  var_seconds: {{ (var_hours) | float * 3600 }}
+  var_seconds: "{{ (var_hours) | float * 3600 }}"
 
 trigger:
 - platform: event
