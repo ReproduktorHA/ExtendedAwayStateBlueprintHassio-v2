@@ -1,6 +1,9 @@
 # Home Assistant automation blueprint: Extended Away state
 
-## Installation
+## Project
+https://github.com/Reproduktor/ExtendedAwayStateBlueprintHassio
+
+## Installation to Home Assistant
 [![Open your Home Assistant instance and show the blueprint import dialog with a specific blueprint pre-filled.](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2FReproduktor%2FExtendedAwayStateBlueprintHassio%2Fblob%2Fmaster%2FExtendedAwayState.yaml)
 
 Or import to HA [from GitHub](https://github.com/Reproduktor/ExtendedAwayStateBlueprintHassio/blob/64d16860f8f4637aff34cc243499ada4981d6161/ExtendedAwayState.yaml)  
