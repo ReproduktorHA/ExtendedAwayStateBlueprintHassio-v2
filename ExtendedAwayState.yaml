@@ -1,6 +1,6 @@
 blueprint:
   name: Maintain an 'extended away' state for a person
-  description: Select a person, a boolean helper, the desired time period, and a datetime helper,
+  description: Select a person, a boolean helper, the desired time period, and a timer helper,
       and this automation will take care of maintaining the provided boolean with a value indicating
       if the given person is away from home for more than the given amount of time.
   domain: automation
@@ -27,13 +27,13 @@ blueprint:
           step: 1
           unit_of_measurement: hrs
           mode: box
-    extended_away_datetime:
-      name: Left home timestamp
-      description: 'A helper datetime to keep the track of the time, when the person left home.'
+    extended_away_timer:
+      name: Timer
+      description: 'A helper timer this automation needs to keep track of the time a person is being away from home.'
       selector:
         entity:
-          domain: input_datetime
-  source_url: https://github.com/ReproduktorHA/ExtendedAwayStateBlueprintHassio-v2/blob/master/ExtendedAwayState.yaml
+          domain: timer
+  source_url: https://github.com/Reproduktor/ExtendedAwayStateBlueprintHassio/blob/master/ExtendedAwayState.yaml
 
 trigger:
 - platform: event
