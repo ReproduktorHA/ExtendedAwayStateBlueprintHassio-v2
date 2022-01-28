@@ -1,3 +1,5 @@
+# README is NOT up-to-date
+
 # Home Assistant automation blueprint: Extended Away state
 
 ## Github repository
